@@ -116,11 +116,39 @@ namespace DataBase
                             ky = st.Split('=')[0];
                             vl = st.Split('=')[1];
                         }
+                        
+                        string tblName = "";
+                        string[] colmuns;
+                        string[] types;
+                        bool[] isNullables;
+                        string[] aliases;
+                        string pk;
+                        
                         //キーがテーブル名ならテーブルオブジェクト生成し
                         //テーブルディクショナリに追加
                         if(ky == "name")
                         {
-                            Tables[vl] = new Table(vl);
+                            tblName = vl;
+                        }
+                        else if(ky == "db_file_path")
+                        {
+                            Table[tblName] = new Table(tblName,vl);
+                        }
+                        else if(ky == "column")
+                        {
+                            columns = vl.Split(',');
+                        }
+                        else if(ky == "type")
+                        {
+                            types = vl.Split(',');
+                        }
+                        else if(ky == "is_nullable")
+                        {
+                            is_nullables = vl.Split(',');
+                        }
+                        else if(ky == "alias")
+                        {
+                            aliases = vl.Split(',');
                         }
                         ///
                     }
