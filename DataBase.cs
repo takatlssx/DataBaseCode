@@ -122,11 +122,7 @@ namespace DataBase
                         {
                             Tables[vl] = new Table(vl);
                         }
-                        else if(ky == "owner")
-                        {
-                            Tables[vl].Owner = vl;
-                        }
-                        
+                        ///
                     }
                 }
             }
