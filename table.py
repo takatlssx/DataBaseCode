@@ -30,7 +30,6 @@ class Table:
             return False
         
         #列設定
-        //設定
         try:
             for i in range(len(names)):
                 columns[names[i]] = column.Column(names[i],types[i],is_nullables[i],aliases[i],i)                
