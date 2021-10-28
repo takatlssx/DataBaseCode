@@ -118,10 +118,10 @@ namespace DataBase
                         }
                         
                         string tblName = "";
-                        string[] colmuns;
-                        string[] types;
-                        bool[] isNullables;
-                        string[] aliases;
+                        List<string> colmuns;
+                        List<string> types;
+                        List<bool> isNullables;
+                        List<string> aliases;
                         string pk;
                         
                         //キーがテーブル名ならテーブルオブジェクト生成し
@@ -144,11 +144,18 @@ namespace DataBase
                         }
                         else if(ky == "is_nullable")
                         {
-                            is_nullables = vl.Split(',');
+                            var buff = vl.Split(',');
+                            foreach(string bf in buff)
+                            {
+                                isNullables.Add(bf == "true")
+                            }
                         }
                         else if(ky == "alias")
                         {
                             aliases = vl.Split(',');
+                        }
+                        else if(ky == "primary_key")
+                        {
                         }
                         ///
                     }
