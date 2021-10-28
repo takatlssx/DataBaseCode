@@ -15,7 +15,8 @@ namespace DataBaseManager
 
 
         public string Name { get; private set; }
-        public string DcFile { get; private set; }
+        public string DbFilePath { get; private set; }
+        
         public Dictionary<string, Column> Columns { get; private set; }
 
         public string PrimaryKey { get; private set; }
@@ -23,9 +24,10 @@ namespace DataBaseManager
         public List<List<string>> Data { get; private set; }
 
 
-        public Table(string name, string dcFile)
+        public Table(string name, string dbFilePath)
         {
             Name = name;
+            DbFilePath = dbFilePath;
         }
 
 
@@ -61,7 +63,7 @@ namespace DataBaseManager
             {
                 for (int i = 0; i < names.Count(); i++)
                 {
-                    Columns[names[i]] = new Column(i, names[i], types[i], isNullables[i], alias[i]);
+                    Columns[names[i]] = new Column(names[i], types[i], isNullables[i], alias[i], i);
                 }
 
                 PrimaryKey = primaryKey;
@@ -75,17 +77,16 @@ namespace DataBaseManager
         }
 
 
-        public bool SetData(string dcFile)
-        {
-            DcFile = dcFile;
+        public bool SetData()
+        {            
             Data = new List<List<string>>();
 
-            if (!File.Exists(DcFile))
+            if (!File.Exists(DbFilePath))
             {
                 return false;
             }
 
-            using (StreamReader sr = new StreamReader(DcFile))
+            using (StreamReader sr = new StreamReader(DbFilePath))
             {
                 string line = "";
                 while ((line = sr.ReadLine()) != null)
