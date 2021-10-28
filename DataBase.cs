@@ -136,11 +136,11 @@ namespace DataBase
                         }
                         else if(ky == "column")
                         {
-                            columns = vl.Split(',');
+                            columns = vl.Split(',').ToList();
                         }
                         else if(ky == "type")
                         {
-                            types = vl.Split(',');
+                            types = vl.Split(',').ToList();
                         }
                         else if(ky == "is_nullable")
                         {
@@ -152,12 +152,13 @@ namespace DataBase
                         }
                         else if(ky == "alias")
                         {
-                            aliases = vl.Split(',');
+                            aliases = vl.Split(',').ToList();
                         }
                         else if(ky == "primary_key")
                         {
+                            Table[tblName].SetColumns(columns,types,isNullables,aliases,vl);
+                            Table[tblName].SetData();
                         }
-                        ///
                     }
                 }
             }
