@@ -132,7 +132,7 @@ namespace DataBase
                         }
                         else if(ky == "db_file_path")
                         {
-                            Table[tblName] = new Table(tblName,vl);
+                            Tables[tblName] = new Table(tblName,vl);
                         }
                         else if(ky == "column")
                         {
@@ -156,8 +156,17 @@ namespace DataBase
                         }
                         else if(ky == "primary_key")
                         {
-                            Table[tblName].SetColumns(columns,types,isNullables,aliases,vl);
-                            Table[tblName].SetData();
+                            Tables[tblName].SetColumns(columns,types,isNullables,aliases,vl);
+                            Tables[tblName].SetData();
+                        }
+                        
+                        if(tblName == MainTableName)
+                        {
+                            MainTable = Tables[tblName];
+                        }
+                        else if(RelationalTableNames.Contains(tblName))
+                        {
+                            RelationalTables[tblName] = Tables[tblName];
                         }
                     }
                 }
