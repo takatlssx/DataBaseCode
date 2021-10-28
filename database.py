@@ -16,6 +16,8 @@ class DataBase:
         self.relational_table_names = []
         
         self.tables = {}
+        self.relational_tables = {}
+        self.main_table = table.Table
     
     
     def initialize():
@@ -41,24 +43,25 @@ class DataBase:
                     vl = "" if line == "[database]" else line.split("=")[1]
                     
                     if ky == "root_dir":
-                        pass
+                        self.root_dir = vl
                     elif ky == "file_dir":
-                        pass
+                        self.file_dir = vl
                     elif ky == "backup_dir":
-                        pass
+                        self.backup_dir = vl
                     elif ky == "member":
-                        pass
+                        self.table_names = vl.split(",")
                     elif ky =="main":
-                        pass
+                        self.main_table_name = vl
                     elif ky == "relatinal":
-                        pass
+                        self.relational_table_names = vl.split(",")
+                        
             #このデータベース所属のテーブルセクションか確認     
             if "[table]" in section_strs and f"owner={self.name}" in section_strs:
                 for line in section_strs:
                     ky = "" if line == "[table]" else line.split("=")[0]
                     vl = "" if line == "[table]" else line.split("=")[1]
                     
-                    tblName = ""
+                    tbl_name = ""
                     colmuns = []
                     types = []
                     is_nullables = []
@@ -66,127 +69,26 @@ class DataBase:
                     pk = ""
                     
                     if ky == "name":
-                        pass
+                        tbl_name = vl
                     elif ky == "db_file_path":
-                        pass
+                        self.tables[tbl_name] = table.Table(tbl_name,vl)
                     elif ky == "column":
-                        pass
+                        columns = vl.split(",")
                     elif ky == "type":
-                        pass
+                        types = vl.split(",")
                     elif ky =="is_nullable":
-                        pass
+                        buff = vl.split(",")
+                        for bf in buff:
+                            is_nullables.append(bf == "true")
                     elif ky == "alias":
-                        pass
+                        aliases = vl.split(",")
                     elif ky == "primary_key":
-                        pass
+                        self.tables[tbl_name].set_columns(columns,types,isNullables,aliases,vl)
+                        self.tables[tbl_name].set_data()
                     
-                    
-            #このデータベースに所属するテーブルのセクションか確認
-            if "[table]" in section_strs and f"owner={self.name}" in section_strs:
-                pass
-                    
-                
-                
-      
-                //このデータベースのセクションか確認
-                if(sectionStrs.Contains("[database]") && sectionStrs.Contains($"name={Name}"))
-                {
-                    foreach(string st in sectionStrs)
-                    {
-                        string ky = "";
-                        string vl = "";
+                    if tbl_name == self.main_table_name:
+                        self.main_table = self.tables[tbl_name]
+                    elif tbl_name in self.relational_table_names:
+                        self.relational_tables[tbl_name] = self.tables[tbl_name]
                         
-                        if(st != "[database]")
-                        {
-                            ky = st.Split('=')[0];
-                            vl = st.Split('=')[1];
-                        }
                         
-                        if(ky == "root_dir")
-                        {
-                            RootDir = vl;
-                        }
-                        else if(ky == "file_dir")
-                        {
-                            FileDir = vl;
-                        }
-                        else if(ky == "backup_dir")
-                        {
-                            BackupDir = vl;
-                        }
-                        else if(ky == "member")
-                        {
-                            TableNames = vl.Split(',').ToList();
-                        }
-                        else if(ky == "main")
-                        {
-                            MainTableName = vl;
-                        }
-                        else if(ky == "relational")
-                        {
-                            RelationalTableNames = vl.Split(',').ToList();
-                        }
-                    }
-                }
-                
-                //このデータベースに所属するテーブルのセクションか確認
-                if(sectionStrs.Contains("[table]") && sectionStrs.Contains($"owner={Name}"))
-                {
-                    foreach(string st in sectionStrs)
-                    {
-                        string ky = "";
-                        string vl = "";
-                        
-                        if(st != "[database]")
-                        {
-                            ky = st.Split('=')[0];
-                            vl = st.Split('=')[1];
-                        }
-                        
-                        string tblName = "";
-                        List<string> colmuns;
-                        List<string> types;
-                        List<bool> isNullables;
-                        List<string> aliases;
-                        string pk;
-                        
-                        //キーがテーブル名ならテーブルオブジェクト生成し
-                        //テーブルディクショナリに追加
-                        if(ky == "name")
-                        {
-                            tblName = vl;
-                        }
-                        else if(ky == "db_file_path")
-                        {
-                            Table[tblName] = new Table(tblName,vl);
-                        }
-                        else if(ky == "column")
-                        {
-                            columns = vl.Split(',').ToList();
-                        }
-                        else if(ky == "type")
-                        {
-                            types = vl.Split(',').ToList();
-                        }
-                        else if(ky == "is_nullable")
-                        {
-                            var buff = vl.Split(',');
-                            foreach(string bf in buff)
-                            {
-                                isNullables.Add(bf == "true")
-                            }
-                        }
-                        else if(ky == "alias")
-                        {
-                            aliases = vl.Split(',').ToList();
-                        }
-                        else if(ky == "primary_key")
-                        {
-                            Table[tblName].SetColumns(columns,types,isNullables,aliases,vl);
-                            Table[tblName].SetData();
-                        }
-                    }
-                }
-            }
-            
-        }
