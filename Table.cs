@@ -32,7 +32,7 @@ namespace DataBaseManager
 
 
         //列情報（Columns）を設定
-        public bool SetColumns(string[] names, string[] types, bool[] isNullables, string[] alias, string primaryKey)
+        public bool SetColumns(List<string> names, List<string> types, List<bool> isNullables, List<string> alias, string primaryKey)
         {
             Columns = new Dictionary<string, Column>();
 
