@@ -14,18 +14,20 @@ namespace Movie
     internal class MySQLite
     {
         public readonly SQLiteConnection conn;
-
+        public readonly SQLiteConnection con;
+        
         public string Name = "";
         public string DbPath = "";
+        
         public string Error = "";
         public string Msg = "";
 
         public SQLiteDataAdapter Adapt;
+        
         public DataTable Data;
         public int MainTableDataCount = 0;
 
         public List<string> TableNames = new List<string>();
-
         public Dictionary<string, List<string>> ColNames = new Dictionary<string, List<string>>();
         public Dictionary<string, List<string>> TypeNames = new Dictionary<string, List<string>>();
         public Dictionary<string, List<string>> NullableValues = new Dictionary<string, List<string>>();
