@@ -488,7 +488,20 @@ namespace Movie
             
             return newPK;
         }
-        
+        //////////////////////////////////////////////////////////////////////////////////////////
+        public int GetDataCount(string tblName)
+        {
+            try
+            {
+                Adapt = new SQLiteDataAdapter($"select * from {tblName}", conn);
+                Adapt.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                Error = $"{ex.Message}";
+                return null;
+            }
+        }
 
         public void ExecuteNonQuery(string sql)
         {
