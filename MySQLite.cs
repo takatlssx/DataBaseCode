@@ -16,11 +16,10 @@ namespace Movie
         public readonly SQLiteConnection conn;
         public readonly SQLiteConnection con;
         
-        public string Name = "";
-        public string DbPath = "";
-        
-        public string Error = "";
-        public string Msg = "";
+        public string Name { get;}
+        public string DbPath { get;}        
+        public string Error { get; }
+        public string Msg { get; }
 
         public SQLiteDataAdapter Adapt;
         
