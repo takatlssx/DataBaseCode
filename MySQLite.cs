@@ -493,16 +493,18 @@ namespace Movie
         {
             try
             {
+                DataTable dt = new DataTable();
                 Adapt = new SQLiteDataAdapter($"select * from {tblName}", conn);
                 Adapt.Fill(dt);
+                return dt.Rows.Count;
             }
             catch (Exception ex)
             {
                 Error = $"{ex.Message}";
-                return null;
+                return -1;
             }
         }
-
+        //////////////////////////////////////////////////////////////////////////////////////////
         public void ExecuteNonQuery(string sql)
         {
             SQLiteCommand sqlCom = new SQLiteCommand(sql, conn);
